@@ -1,11 +1,9 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const https = require('https');
 const dotenv = require('dotenv');
-dotenv.config();
-const key = process.env.key;
-const urlId = process.env.url;
 
 const app = express();
 
@@ -34,12 +32,11 @@ app.post('/', (req, res) => {
     }
 
     const jsonData = JSON.stringify(data);
-    const url = urlId;
     const options = {
         method: 'POST',
-        auth: key
+        auth: process.env.KEY
     }
-    const request = https.request(url, options, (response) => {
+    const request = https.request(process.env.URL, options, (response) => {
         if(response.statusCode === 200) {
             res.sendFile(__dirname + '/success.html');
         } else {
